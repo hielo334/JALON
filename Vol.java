@@ -7,22 +7,20 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Programme de gestion des vols pour AIRMESS
- * 
- * Ce programme permet :
+ * Programme de gestion des vols pour AIRMES
  * - L'authentification sécurisée
  * - La création de vols avec calcul automatique des prix
  * - L'affichage de tous les vols
  */
 public class Vol {
-    // Constantes pour l'authentification
+    // Authentification
     private static final String LOGIN = "hutt";
     private static final String PASSWORD = "david";
     
-    // Liste pour stocker tous les vols
+    // Liste pour stocker les vols
     private static List<Vol> listeVols = new ArrayList<>();
     
-    // Attributs d'un vol
+    // Nouveau vol
     private String departVille;
     private String departPays;
     private String arriveeVille;
@@ -33,7 +31,7 @@ public class Vol {
     private int nombrePlaces;
     private double prixInitial;
 
-    // Constructeur
+    // Affichage
     public Vol(String departVille, String departPays, String arriveeVille, String arriveePays,
               LocalDateTime dateHeureDepart, int dureeHeures, int dureeMinutes, 
               int nombrePlaces, double prixInitial) {
@@ -49,14 +47,14 @@ public class Vol {
     }
 
     /**
-     * Calcule l'heure d'arrivée en ajoutant la durée du vol
+     * Calcule l'heure d'arrivée
      */
     public LocalDateTime getDateHeureArrivee() {
         return dateHeureDepart.plusHours(dureeHeures).plusMinutes(dureeMinutes);
     }
 
     /**
-     * Prix ajusté selon les règles métier :
+     * Prix ajusté :
      * - +40% si départ dans moins d'1 semaine
      * - -40% si départ dans plus de 6 mois
      * - -10% si ≥150 places
@@ -66,7 +64,7 @@ public class Vol {
         double prix = prixInitial;
         LocalDateTime aujourdHui = LocalDateTime.now();
 
-        // Ajustement basé sur la date
+        // Basé sur la date
         long joursAvantDepart = ChronoUnit.DAYS.between(aujourdHui, dateHeureDepart);
         if (joursAvantDepart < 7) {
             prix *= 1.40;
@@ -74,7 +72,7 @@ public class Vol {
             prix *= 0.60;
         }
 
-        // Ajustement basé sur les places
+        // Basé sur les places
         if (nombrePlaces >= 150) {
             prix *= 0.90;
         } else if (nombrePlaces < 100) {
@@ -85,7 +83,7 @@ public class Vol {
     }
 
     /**
-     * Affichage formaté d'un vol
+     * Affichage d'un vol
      */
     @Override
     public String toString() {
@@ -132,7 +130,7 @@ public class Vol {
             System.out.print("Votre choix: ");
             
             int choix = scanner.nextInt();
-            scanner.nextLine();  // Nettoie le buffer
+            scanner.nextLine();
             
             switch (choix) {
                 case 1:
@@ -154,7 +152,7 @@ public class Vol {
     }
     
     /**
-     * Ajoute un nouveau vol après saisie des informations
+     * Ajoute un nouveau vol après informations
      */
     private static void ajouterVol(Scanner scanner) {
         System.out.println("\n--- NOUVEAU VOL ---");
@@ -199,7 +197,7 @@ public class Vol {
         System.out.print("Prix initial: ");
         double prix = scanner.nextDouble();
         
-        // Création et ajout du vol
+        // Ajout du vol
         Vol nouveauVol = new Vol(
             villeDepart, paysDepart, 
             villeArrivee, paysArrivee,
@@ -212,7 +210,7 @@ public class Vol {
     }
     
     /**
-     * Affiche la liste de tous les vols
+     * Liste de tous les vols
      */
     private static void listerVols() {
         if (listeVols.isEmpty()) {
