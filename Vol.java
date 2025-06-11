@@ -1,26 +1,25 @@
-
 package JALON;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
- * Programme de gestion des vols pour AIRMES
+ * Programme de gestion des vols pour AIRMESS
+ * 
+ * Ce programme permet :
  * - L'authentification sécurisée
  * - La création de vols avec calcul automatique des prix
  * - L'affichage de tous les vols
  */
 public class Vol {
-    // Authentification
+    // Constantes pour l'authentification
     private static final String LOGIN = "hutt";
     private static final String PASSWORD = "david";
     
-    // Liste pour stocker les vols
-    private static List<Vol> listeVols = new ArrayList<>();
+    // Chaîne pour stocker tous les vols
+    private static String tousLesVols = "";
     
-    // Nouveau vol
+    // Attributs d'un vol
     private String departVille;
     private String departPays;
     private String arriveeVille;
@@ -31,7 +30,7 @@ public class Vol {
     private int nombrePlaces;
     private double prixInitial;
 
-    // Affichage
+    // Constructeur
     public Vol(String departVille, String departPays, String arriveeVille, String arriveePays,
               LocalDateTime dateHeureDepart, int dureeHeures, int dureeMinutes, 
               int nombrePlaces, double prixInitial) {
@@ -47,14 +46,15 @@ public class Vol {
     }
 
     /**
-     * Calcule l'heure d'arrivée
+     * 
+    heure d'arrivée en ajoutant la durée du vol
      */
     public LocalDateTime getDateHeureArrivee() {
         return dateHeureDepart.plusHours(dureeHeures).plusMinutes(dureeMinutes);
     }
 
     /**
-     * Prix ajusté :
+     * Prix ajusté selon les règles métier :
      * - +40% si départ dans moins d'1 semaine
      * - -40% si départ dans plus de 6 mois
      * - -10% si ≥150 places
@@ -64,7 +64,7 @@ public class Vol {
         double prix = prixInitial;
         LocalDateTime aujourdHui = LocalDateTime.now();
 
-        // Basé sur la date
+        // Ajustement basé sur la date
         long joursAvantDepart = ChronoUnit.DAYS.between(aujourdHui, dateHeureDepart);
         if (joursAvantDepart < 7) {
             prix *= 1.40;
@@ -72,7 +72,7 @@ public class Vol {
             prix *= 0.60;
         }
 
-        // Basé sur les places
+        // Ajustement basé sur les places
         if (nombrePlaces >= 150) {
             prix *= 0.90;
         } else if (nombrePlaces < 100) {
@@ -83,7 +83,7 @@ public class Vol {
     }
 
     /**
-     * Affichage d'un vol
+     * Affichage formaté d'un vol
      */
     @Override
     public String toString() {
@@ -130,7 +130,7 @@ public class Vol {
             System.out.print("Votre choix: ");
             
             int choix = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine();  // Nettoie le buffer
             
             switch (choix) {
                 case 1:
@@ -152,7 +152,7 @@ public class Vol {
     }
     
     /**
-     * Ajoute un nouveau vol après informations
+     * Ajoute un nouveau vol après saisie des informations
      */
     private static void ajouterVol(Scanner scanner) {
         System.out.println("\n--- NOUVEAU VOL ---");
@@ -197,7 +197,7 @@ public class Vol {
         System.out.print("Prix initial: ");
         double prix = scanner.nextDouble();
         
-        // Ajout du vol
+        // Création du vol
         Vol nouveauVol = new Vol(
             villeDepart, paysDepart, 
             villeArrivee, paysArrivee,
@@ -205,22 +205,21 @@ public class Vol {
             places, prix
         );
         
-        listeVols.add(nouveauVol);
+        // Ajout du vol à la chaîne
+        tousLesVols += nouveauVol.toString() + "\n====================\n";
         System.out.println("\nVol ajouté avec succès !");
     }
     
     /**
-     * Liste de tous les vols
+     * Affiche la liste de tous les vols
      */
     private static void listerVols() {
-        if (listeVols.isEmpty()) {
+        if (tousLesVols.isEmpty()) {
             System.out.println("Aucun vol enregistré.");
             return;
         }
         
-        System.out.println("\n=== LISTE DES VOLS ===");
-        for (Vol vol : listeVols) {
-            System.out.println(vol);
-        }
+        System.out.println("\n=== LISTE DES VOLS ===\n");
+        System.out.println(tousLesVols);
     }
 }
