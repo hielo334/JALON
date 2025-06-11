@@ -8,11 +8,11 @@ import java.util.Scanner;
  * 
  * Ce programme permet :
  * - L'authentification sécurisée
- * - La création de vols avec calcul automatique des prix
- * - L'affichage de tous les vols
+ * - Création de vols avec calcul automatique des prix
+ * - Affichage de tous les vols
  */
 public class Vol {
-    // Constantes pour l'authentification
+    // Authentification
     private static final String LOGIN = "hutt";
     private static final String PASSWORD = "david";
     
@@ -91,7 +91,7 @@ public class Vol {
             "Vol de %s (%s) à %s (%s)\n" +
             "Départ: %s\nArrivée: %s\n" +
             "Durée: %dh %dmin\nPlaces: %d\n" +
-            "Prix initial: %.2f€\nPrix ajusté: %.2f€\n",
+            "Prix initial: %.2fEUR\nPrix ajusté: %.2fEUR\n",
             departVille, departPays, arriveeVille, arriveePays,
             dateHeureDepart, getDateHeureArrivee(),
             dureeHeures, dureeMinutes, nombrePlaces,
@@ -211,7 +211,7 @@ public class Vol {
     }
     
     /**
-     * Affiche la liste de tous les vols
+     * Liste de tous les vols
      */
     private static void listerVols() {
         if (tousLesVols.isEmpty()) {
