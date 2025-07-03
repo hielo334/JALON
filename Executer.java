@@ -35,7 +35,7 @@ public class Executer {
                 afficherMenu();
         }
     }
-    // Ajouter une voiture
+    //(1) Ajouter une voiture
     private static void ajouterVoiture() {
         System.out.println("Voulez-vous ajouter une voiture, très bien");
         
@@ -174,7 +174,7 @@ public class Executer {
         }
         System.out.println();
     }
-    // Supprimer voiture
+    //(2) Supprimer voiture
     private static void supprimerVoiture() {
         System.out.println("Entrez le code de la voiture à supprimer:");
         String code = scanner.nextLine();
@@ -189,7 +189,7 @@ public class Executer {
         
         afficherMenu();
     }
-    // Recherche de voiture avec code, marque ou modèle
+    //(3) Recherche de voiture avec code, marque ou modèle
     private static void rechercherVoiture() {
         System.out.println("Entrez le code, la marque ou le modèle de la voiture à rechercher:");
         String termeRecherche = scanner.nextLine().toLowerCase();

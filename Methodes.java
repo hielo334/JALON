@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Methodes {
 
-    // Données, respect de l'ordre
+    // Données contantes, respect de l'ordre
     public static final String[] MARQUES = {"Wolskwagen", "Audi", "Porsche", "Lamborghini"};
     public static final String[][] MODELES = {
         {"Polo", "Tiguan", "Golf"},
@@ -40,7 +40,7 @@ public class Methodes {
         if (kilometrage >= 100000) return 0.25;
         return 0.1;
     }
-    //Fonction pour calculer le prix total
+    //Fonction pour calculer le prix total (avec couleur)
     public static int calculerPrix(int indexMarque, int indexModele, int indexCouleur, boolean estNeuf, int kilometrage) {
         int prixBase = PRIX[indexMarque][indexModele];
         int supplementCouleur = SUPPLEMENTS_COULEURS[indexCouleur];
@@ -62,7 +62,7 @@ public class Methodes {
             voiture[5], Integer.parseInt(voiture[6])
         );
     }
-    //Fonction pour choix
+    //Fonction pour choix valide
     public static boolean choixValide(int choix, int max) {
         return choix >= 1 && choix <= max;
     }
